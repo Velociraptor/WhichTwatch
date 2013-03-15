@@ -103,28 +103,21 @@ app.listen(app.get('port'), function () {
 var carrier = require('carrier');
 
 app.get('/stream', loginRequired, function (req, res) {
+  var movielist = ['Oz', 'Movie 43', 'Side Effects', 'Warm Bodies'];
+  var movies = [['Oz',0], ['Movie 43',0], ['Side Effects',0], ['Warm Bodies',0]];
   req.api.stream('statuses/filter').post({
-    track: ['wall street', 'stock', 'stocks']
+    track: movielist
   }, function (err, stream) {
-    var catcount = 0;
-    var dogcount = 0;
-    var bothcount = 0;
     carrier.carry(stream, function (line) {
       var line = JSON.parse(line);
-      if (line.text.indexOf('wall') != -1) {
-        catcount += 1;
-        console.log(catcount);
-      }
-      if (line.text.indexOf('stock') != -1) {
-        dogcount += 1;
-        console.log(dogcount);
-      }
-      if (line.text.indexOf('wall') != -1) {
-        if (line.text.indexOf('street') != -1) {
-          bothcount += 1;
-          console.log(bothcount);
+      movies.forEach(function(movie) {
+        if (line.text.indexOf(movie[0]) != -1) {
+          movie[1] += 1;
+          console.log(line);
+          console.log(movie);
         }
-      }
+      })
+
       res.write(line.text + '\n');
     });
   });

@@ -1,5 +1,19 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+	div(class='hero-unit text-center')
+		form(class='form-horizontal', id='search')
+			div(class='inline-block')
+				legend Search for hot movies!
+				div(class="control-group")
+					label(class="control-label", for='genre') Movie Genre
+					div(class="controls")
+						input(type="text", id="genre", placeholder="Genre")
+				div(class="control-group")
+					label(class="control-label", for='rating') MPAA Rating
+					div(class="controls")
+						input(type="text", id="rating", placeholder="Rating")
+				div(class="form-actions")
+					input(type="submit", class='btn ', value="Upload")
+	div(id='movies')
+		include _movies

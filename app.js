@@ -1,7 +1,11 @@
 // npm install express rem
 var rem = require('rem')
   , express = require('express')
-  , path = require('path')
+  , routes = require('./routes')
+  , user = require('./routes/user')
+  , http = require('http')
+  , mongoose = require('mongoose')
+  , path = require('path');
 
 /**
  * Express.
@@ -122,3 +126,6 @@ app.get('/stream', loginRequired, function (req, res) {
     });
   });
 })
+
+app.post('/search', routes.search);
+app.get('/update', routes.update);

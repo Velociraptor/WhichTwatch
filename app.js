@@ -80,7 +80,9 @@ function loginRequired (req, res, next) {
 
 app.get('/', loginRequired, function (req, res) {
   req.api('account/verify_credentials').get(function (err, profile) {
-    res.send('Hi ' + profile.screen_name + '! <form action="/status" method="post"><input name="status"><button>Post Status</button></form>');
+    //res.send('Hi ' + profile.screen_name + '! <form action="/status" method="post"><input name="status"><button>Post Status</button></form>');
+    res.render('index', {title:'AWoonetoisndfoi9'});
+
   });
 });
 
@@ -129,3 +131,5 @@ app.get('/stream', loginRequired, function (req, res) {
 
 app.post('/search', routes.search);
 app.get('/update', routes.update);
+
+app.post('/listMovies', routes.movies);

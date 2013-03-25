@@ -1,3 +1,5 @@
+http = require('http')
+
 // Rotten Tomatoes Setup Stuff
 var apikey = process.env.ROTTEN_KEY;
 var baseUrl = "http://api.rottentomatoes.com/api/public/v1.0";
@@ -31,6 +33,41 @@ exports.update = function(req, res){
 
 exports.search = function(req, res){
 	// Do some stuff with twitter and db and rottentomatoes
+};
+
+exports.movies = function(req,res){ 
+	console.log(req.body);
+	console.log('zip: '+ req.body['zip']);
+	var zipcode = req.body['zip'];
+	var start = 0;
+	var requestUrl ='/ig/api?movies='+zipcode+'&start='+start;
+	console.log('bananas');
+	console.log(requestUrl);
+
+	var options = {
+		hostname: 'www.google.com',
+		port: 80,
+		path: requestUrl,
+		method: 'GET'
+	};
+
+	var request = http.request(options, function(result) {
+	  console.log('STATUS: ' + res.statusCode);
+	  console.log('HEADERS: ' + JSON.stringify(res.headers));
+	  result.setEncoding('utf8');
+	  result.on('data', function (chunk) {
+	  console.log('BODY: ' + chunk);
+    });
+	});
+
+	request.on('error', function(e) {
+	  console.log('problem with request: ' + e.message);
+	});
+
+	// write data to request body
+	request.write('data\n');
+	request.write('data\n');
+	request.end();
 };
 
 function movieSearch (query) {

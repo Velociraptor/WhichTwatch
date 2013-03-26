@@ -36,38 +36,63 @@ exports.search = function(req, res){
 };
 
 exports.movies = function(req,res){ 
-	console.log(req.body);
-	console.log('zip: '+ req.body['zip']);
+	//console.log('zip: '+ req.body['zip']);
 	var zipcode = req.body['zip'];
 	var start = 0;
-	var requestUrl ='/ig/api?movies='+zipcode+'&start='+start;
-	console.log('bananas');
-	console.log(requestUrl);
+	var title_list = [];
 
-	var options = {
-		hostname: 'www.google.com',
-		port: 80,
-		path: requestUrl,
-		method: 'GET'
+	while (start < 30) {
+
+		var requestUrl ='/ig/api?movies='+zipcode+'&start='+start;
+		//console.log(requestUrl);
+
+		var options = {
+			hostname: 'www.google.com',
+			port: 80,
+			path: requestUrl,
+			method: 'GET'
+		};
+
+		var request = http.request(options, function(result) {
+		  //console.log('STATUS: ' + res.statusCode);
+		  //console.log('HEADERS: ' + JSON.stringify(res.headers));
+		  result.setEncoding('utf8');
+		  result.on('data', function (chunk) {
+		  	//console.log('BODY: ' + chunk);
+		  	var more_titles = true;
+		  	title_start = 0;
+		  	while (more_titles == true) {
+		  		title_index = chunk.indexOf('title data', title_start) + 12;
+			  	if (title_index != 11) {
+			  		title_end = chunk.indexOf('/>', title_index) - 1;
+			  		new_title = chunk.slice(title_index, title_end);
+			  		//console.log(new_title);
+			  		title_list.push(new_title);
+			  		console.log(title_list);
+			  		title_start = title_end;
+			  	} else {
+			  		more_titles = false;
+			  	};
+		  };
+	    });
+		});
+
+		request.on('error', function(e) {
+		  console.log('problem with request: ' + e.message);
+		});
+
+		// write data to request body
+		//request.write('data\n');
+		//request.write('data\n');
+		console.log(title_list);
+		request.end();
+
+		start = start + 3;
+		
 	};
 
-	var request = http.request(options, function(result) {
-	  console.log('STATUS: ' + res.statusCode);
-	  console.log('HEADERS: ' + JSON.stringify(res.headers));
-	  result.setEncoding('utf8');
-	  result.on('data', function (chunk) {
-	  console.log('BODY: ' + chunk);
-    });
-	});
-
-	request.on('error', function(e) {
-	  console.log('problem with request: ' + e.message);
-	});
-
-	// write data to request body
-	request.write('data\n');
-	request.write('data\n');
-	request.end();
+	console.log('bananas!');
+	console.log(title_list);
 };
 
 function movieSearch (query) {

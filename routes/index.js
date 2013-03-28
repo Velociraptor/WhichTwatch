@@ -25,13 +25,13 @@ exports.index = function(req, res){
 		data.forEach(function(movie) {
 			console.log('movie', movie);
 			console.log('movie tags', movie.tags);
-			taglist.push.apply(movie.tags);
+			taglist.push(movie.tags);
 			console.log(taglist);
 		});
 	    if (err)
 	    	return console.log ('error', err);
 	    console.log('final taglist: ', taglist);
-	    taglist = '{tag: "one", count: 1}; {tag: "two" , count :2}; {tag: "three" , count :3}; {tag: "four" , count :4}; {tag: "five" , count :5}; {tag: "six" , count :6}';
+	    //taglist = '{tag: "one", count: 1}; {tag: "two" , count :2}; {tag: "three" , count :3}; {tag: "four" , count :4}; {tag: "five" , count :5}; {tag: "six" , count :6}';
 	    res.render('index', { title: 'Which t\'Watch', Movies: data, tags: taglist});
 	});
 };

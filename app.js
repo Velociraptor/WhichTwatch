@@ -13,6 +13,9 @@ var rem = require('rem')
 
 var app = express();
 
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/whichtwatch');
+
+
 app.configure(function () {
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');

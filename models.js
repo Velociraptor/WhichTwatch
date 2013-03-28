@@ -2,13 +2,13 @@ var mongoose = require('mongoose');
 
 var MovieSchema = mongoose.Schema({
 	title: String,
-	genre: String,
+	runtime: Number,
 	MPAA: String,
 	poster: String,
 	synopsis: String,
-	critics: int,
-	viewers: int,
-	tags: [{tag: String, hits: int}]
+	critics: Number,
+	viewers: Number,
+	tags: [{tag: String, hits: Number}]
 });
 
 var Movie = mongoose.model('Movie', MovieSchema);

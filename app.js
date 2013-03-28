@@ -5,6 +5,7 @@ var rem = require('rem')
   , user = require('./routes/user')
   , http = require('http')
   , mongoose = require('mongoose')
+  , twitter = require('twitter')
   , path = require('path');
 
 /**
@@ -12,6 +13,9 @@ var rem = require('rem')
  */
 
 var app = express();
+
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/whichtwatch');
+
 
 app.configure(function () {
   app.set('port', process.env.PORT || 3000);
@@ -124,7 +128,14 @@ app.get('/stream', loginRequired, function (req, res) {
   });
 })
 
-app.post('/search', routes.search);
+app.get('/search', loginRequired, function (req,res) {
+  req.api('search/tweets').get({
+    q: 'turret'
+  }, function (err, search) {
+    res.send(search)
+    // console.log(search.statuses[0].text)
+  })
+});
 app.get('/update', routes.update);
 
 app.post('/listMovies', routes.movies);

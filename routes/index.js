@@ -20,7 +20,7 @@ var theatersUrl = "/lists/movies/in_theaters.json?apikey=" + apikey;
 exports.index = function(req, res){
 	movieSearch();
   // searchTwitter(req);
-	Movie.find({'tags':{'tag':'any'}}).sort({'title' : 'ascending'}).exec(function(err,data){
+	Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
 	    if (err)
 	    	return console.log ('error', err);
 	    res.render('index', { title: 'Which t\'Watch', Movies: data});

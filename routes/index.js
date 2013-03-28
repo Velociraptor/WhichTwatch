@@ -20,6 +20,7 @@ var theatersUrl = "/lists/movies/in_theaters.json?apikey=" + apikey;
 exports.index = function(req, res){
 	movieSearch();
 	var taglist = [];
+    //searchTwitter(req);
 	Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
 		data.forEach(function(movie) {
 			console.log('movie', movie);
@@ -41,12 +42,6 @@ exports.update = function(req, res){
       return console.log ('error', err);
     res.render('_movies', {Movies: data});
   });
-};
-
-exports.search = function(req, res){
-	// Do some stuff with twitter and db and rottentomatoes
-  // Tom is working on making this search for tweets
-  
 };
 
 exports.movies = function(req,res){ 
@@ -141,17 +136,15 @@ function saveToDB (obj) {
 		if (err)
 			return console.log ('error', err);
 		var movies = obj.movies
-		console.log(movies);
 		movies.forEach(function(movie){
 			var dbMovie = new Movie({
 				title: movie.title,
 				runtime: movie.runtime,
 				MPAA: movie.mpaa_rating,
-				poster: movie.posters.detailed,
+				poster: movie.posters.original,
 				synopsis: movie.synopsis,
 				critics: movie.ratings.critics_score,
-				viewers: movie.ratings.audience_score,
-				tags: [{tag: 'Any', hits: 1}]
+				viewers: movie.ratings.audience_score
 			});
 			dbMovie.save(function(err){
 				if (err){
@@ -192,3 +185,18 @@ function textParse (inputTweet, inputMovie) {
 	});
 	//Movie.update({'name': inputMovie}, {'tags':new_tags}).exec(function(err, movie1){
 	};
+
+function searchTwitter (req) {
+	// Do some stuff with twitter and db and rottentomatoes
+  Movie.find({}).exec(function(req,err,results){
+      req.api('search/tweets').get({
+        q: results[0].title,
+        count: 100
+      }, function (err, search) {
+        for (var i = 0; i < search.statuses.length; i++) {
+          console.log(search.statuses[i].text);
+        }
+      })
+  })
+
+}

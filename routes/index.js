@@ -19,8 +19,8 @@ var theatersUrl = "/lists/movies/in_theaters.json?apikey=" + apikey;
 
 exports.index = function(req, res){
 	movieSearch();
-  searchTwitter(req);
-	Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
+  // searchTwitter(req);
+	Movie.find({'tags':{'tag':'any'}}).sort({'title' : 'ascending'}).exec(function(err,data){
 	    if (err)
 	    	return console.log ('error', err);
 	    res.render('index', { title: 'Which t\'Watch', Movies: data});
@@ -135,7 +135,8 @@ function saveToDB (obj) {
 				poster: movie.posters.original,
 				synopsis: movie.synopsis,
 				critics: movie.ratings.critics_score,
-				viewers: movie.ratings.audience_score
+				viewers: movie.ratings.audience_score,
+				tags:[{tag: 'any', hits: 1}]
 			});
 			dbMovie.save(function(err){
 				if (err){

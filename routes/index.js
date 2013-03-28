@@ -1,4 +1,5 @@
 http = require('http')
+twitter = require('twitter')
 
 // Rotten Tomatoes Setup Stuff
 var apikey = process.env.ROTTEN_KEY;
@@ -33,6 +34,8 @@ exports.update = function(req, res){
 
 exports.search = function(req, res){
 	// Do some stuff with twitter and db and rottentomatoes
+  // Tom is working on making this search for tweets
+  
 };
 
 exports.movies = function(req,res){ 

@@ -1,10 +1,15 @@
-http = require('http')
+var http = require('http'),
+	models = require('../models'),
+	mongoose = require('mongoose')
+	Movie = models.Movie;
+
 
 // Rotten Tomatoes Setup Stuff
 var apikey = process.env.ROTTEN_KEY;
-var baseUrl = "http://api.rottentomatoes.com/api/public/v1.0";
-var moviesSearchUrl = baseUrl + '/movies.json?apikey=' + apikey;
-var theatersUrl = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=" + apikey;
+var baseUrl = "api.rottentomatoes.com"
+var basePath = "/api/public/v1.0";
+var moviesSearchUrl = '/movies.json?apikey=' + apikey;
+var theatersUrl = "/lists/movies/in_theaters.json?apikey=" + apikey;
 // This last url should be able to get us current movies in theaters in a list with all the info we need as well,
 // so we could grab those and stick into a database
 // but I don't know how we would want to update that db or how we would get away with not using one
@@ -12,15 +17,9 @@ var theatersUrl = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in
 // I don't know if we can do that either.
 
 
-
-var models = require('../models'),
-Movie = models.Movie;
-/*
- * GET home page.
- */
-
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+	movieSearch();
+	res.render('index', { title: 'Express' });
 };
 
 exports.update = function(req, res){
@@ -95,6 +94,45 @@ exports.movies = function(req,res){
 	console.log(title_list);
 };
 
-function movieSearch (query) {
-	var url = moviesSearchUrl + '&q=' + encodeURI(query);
+function movieSearch () {
+	var output = '';
+	var options = {
+		hostname: baseUrl,
+		port: 80,
+		path: basePath + theatersUrl,
+		method: 'GET',
+		headers: {'Content-Type': 'application/json'}
+	};
+
+	var req = http.request(options, function(res) {
+		res.setEncoding('utf8');
+		res.on('data', function (chunk) {
+			output += chunk;
+		});
+		res.on('end', function(){
+			var obj = JSON.parse(output);
+			saveToDB(obj);
+		})
+	});
+
+	req.on('error', function(e) {
+		console.log('problem with request: ' + e.message);
+	});
+	req.end();
+}
+
+function saveToDB (obj) {
+	var movies = obj.movies
+	movies.forEach(function(movie){
+		var dbMovie = new Movie({
+			title: movie.title,
+			genre: String,
+			MPAA: movie.mpaa_rating,
+			poster: movie.poster.detailed,
+			synopsis: movie.synopsis,
+			critics: movie.ratings.critics_score,
+			viewers: movie.ratings.audience_score,
+			tags: [{tag: String, hits: int}]
+		})
+	})
 }

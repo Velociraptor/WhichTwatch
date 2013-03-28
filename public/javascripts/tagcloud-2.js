@@ -69,9 +69,22 @@ CHANGES:
 */
 
 $(function() { 
-   var tags = [{tag: "computers", count: 56}, {tag: "mobile" , count :12}, ... ];
-   $("#tagcloud"}.tagCloud(tags);
-};
+   //var tags = [{tag: "one", count: 1}, {tag: "two" , count :2}, {tag: "three" , count :3}, {tag: "four" , count :4}, {tag: "five" , count :5}, {tag: "six" , count :6}];
+   // var taglist = [];
+   // Movie.find({}).exec(function(err, movies){
+   //    movies.forEach(function(movie) {
+   //       taglist.extend(movie.tags);
+   //       console.log('banana', movie.tags);
+   //       console.log('taglist', taglist);
+   //    });
+   // });
+   var tagstr = $(".tagcloud").attr('name');
+   tags = tagstr.split(';');
+   tags = '[' + tags + ']';
+   tags = jQuery.parseJSON(tags);
+   console.log('here are tags: ', tags);
+   $(".tagcloud").tagCloud(tags);
+});
 
 jQuery.fn.tagCloud = function(cl, givenOptions) { //return this.each( function() { //like a real jQuery plugin: run on on each element
    if (!cl || !cl.length)
@@ -80,7 +93,9 @@ jQuery.fn.tagCloud = function(cl, givenOptions) { //return this.each( function()
    // Default settings:
    var defaults = {
       sort: function (a, b) {return a.tag < b.tag ? -1 : (a.tag == b.tag ? 0 : 1)},//default sorting: abc
-      click: function(tag) {},
+      click: function(tag) {
+         console.log(tag);
+      },
       maxFontSizeEm: 4
    }
 

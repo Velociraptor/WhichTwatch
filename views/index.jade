@@ -19,6 +19,7 @@ block content
 						input(type="text", id="rating", name="rating", placeholder="Rating")
 				div(class="form-actions")
 					input(type="submit", class='btn', value="Find Me Movies!")
-	div(id='cloud')
+	div(class='tagcloud', name=tags)
+		| I am a tag cloud
 	div(id='movies')
 		include _movies

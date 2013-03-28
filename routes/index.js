@@ -144,7 +144,8 @@ function saveToDB (obj) {
 				poster: movie.posters.original,
 				synopsis: movie.synopsis,
 				critics: movie.ratings.critics_score,
-				viewers: movie.ratings.audience_score
+				viewers: movie.ratings.audience_score,
+				tags:[{tag: 'any', hits: 1}]
 			});
 			dbMovie.save(function(err){
 				if (err){

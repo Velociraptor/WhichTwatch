@@ -69,20 +69,21 @@ CHANGES:
 */
 
 $(function() { 
-   //var tags = [{tag: "one", count: 1}, {tag: "two" , count :2}, {tag: "three" , count :3}, {tag: "four" , count :4}, {tag: "five" , count :5}, {tag: "six" , count :6}];
-   // var taglist = [];
-   // Movie.find({}).exec(function(err, movies){
-   //    movies.forEach(function(movie) {
-   //       taglist.extend(movie.tags);
-   //       console.log('banana', movie.tags);
-   //       console.log('taglist', taglist);
-   //    });
-   // });
-   var tagstr = $(".tagcloud").attr('name');
-   tags = tagstr.split(';');
-   tags = '[' + tags + ']';
-   tags = jQuery.parseJSON(tags);
-   console.log('here are tags: ', tags);
+   // //var tags = [{tag: "one", count: 1}, {tag: "two" , count :2}, {tag: "three" , count :3}, {tag: "four" , count :4}, {tag: "five" , count :5}, {tag: "six" , count :6}];
+   // // var taglist = [];
+   // // Movie.find({}).exec(function(err, movies){
+   // //    movies.forEach(function(movie) {
+   // //       taglist.extend(movie.tags);
+   // //       console.log('banana', movie.tags);
+   // //       console.log('taglist', taglist);
+   // //    });
+   // // });
+   // var tagstr = $(".tagcloud").attr('name');
+   // tags = tagstr.split(';');
+   // tags = '[' + tags + ']';
+   // tags = jQuery.parseJSON(tags);
+   // console.log('here are tags: ', tags);
+   var tags = [{tag: "guns", count: 50}, {tag: "cars", count: 30}, {tag: "action", count: 100}, {tag: "horror", count: 40}, {tag: "alien", count: 60}, {tag: "boring", count: 20}, {tag: "music", count: 80}, {tag: "awesome", count: 40}];
    $(".tagcloud").tagCloud(tags);
 });
 

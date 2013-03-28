@@ -19,6 +19,7 @@ var theatersUrl = "/lists/movies/in_theaters.json?apikey=" + apikey;
 
 exports.index = function(req, res){
 	movieSearch();
+  searchTwitter(req);
 	Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
 	    if (err)
 	    	return console.log ('error', err);
@@ -32,12 +33,6 @@ exports.update = function(req, res){
       return console.log ('error', err);
     res.render('_movies', {Movies: data});
   });
-};
-
-exports.search = function(req, res){
-	// Do some stuff with twitter and db and rottentomatoes
-  // Tom is working on making this search for tweets
-  
 };
 
 exports.movies = function(req,res){ 
@@ -132,7 +127,7 @@ function saveToDB (obj) {
 		if (err)
 			return console.log ('error', err);
 		var movies = obj.movies
-		console.log(movies);
+		// console.log(movies);
 		movies.forEach(function(movie){
 			var dbMovie = new Movie({
 				title: movie.title,
@@ -183,3 +178,18 @@ function textParse (inputTweet, inputMovie) {
 	});
 	//Movie.update({'name': inputMovie}, {'tags':new_tags}).exec(function(err, movie1){
 	};
+
+function searchTwitter (req) {
+	// Do some stuff with twitter and db and rottentomatoes
+  Movie.find({}).exec(function(req,err,results){
+      req.api('search/tweets').get({
+        q: results[0].title,
+        count: 100
+      }, function (err, search) {
+        for (var i = 0; i < search.statuses.length; i++) {
+          console.log(search.statuses[i].text);
+        }
+      })
+  })
+
+}

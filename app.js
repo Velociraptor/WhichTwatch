@@ -101,41 +101,6 @@ app.listen(app.get('port'), function () {
   console.log('Listening on http://' + app.get('host'))
 });
 
-/**
- * Streaming example
- */
-
-var carrier = require('carrier');
-
-app.get('/stream', loginRequired, function (req, res) {
-  var movielist = ['Oz', 'Movie 43', 'Side Effects', 'Warm Bodies'];
-  var movies = [['Oz',0], ['Movie 43',0], ['Side Effects',0], ['Warm Bodies',0]];
-  req.api.stream('statuses/filter').post({
-    track: movielist
-  }, function (err, stream) {
-    carrier.carry(stream, function (line) {
-      var line = JSON.parse(line);
-      movies.forEach(function(movie) {
-        if (line.text.indexOf(movie[0]) != -1) {
-          movie[1] += 1;
-          console.log(line);
-          console.log(movie);
-        }
-      })
-
-      res.write(line.text + '\n');
-    });
-  });
-})
-
-app.get('/search', loginRequired, function (req,res) {
-  req.api('search/tweets').get({
-    q: 'turret'
-  }, function (err, search) {
-    res.send(search)
-    // console.log(search.statuses[0].text)
-  })
-});
 app.get('/update', routes.update);
 
 app.post('/listMovies', routes.movies);

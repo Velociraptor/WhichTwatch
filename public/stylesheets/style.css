@@ -9,4 +9,13 @@ a {
 
 .inline-block {
 	display: inline-block;
+	margin-left: 10px;
+}
+
+.not-bold {
+	font-weight: normal;
+}
+
+.movie {
+	min-height: 270px;
 }

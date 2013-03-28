@@ -1,9 +1,9 @@
 http = require('http')
-twitter = require('twitter')=
-var http = require('http'),
-	models = require('../models'),
-	mongoose = require('mongoose')
-	Movie = models.Movie;=
+twitter = require('twitter')
+http = require('http')
+models = require('../models')
+mongoose = require('mongoose')
+Movie = models.Movie
 
 // Rotten Tomatoes Setup Stuff
 var apikey = process.env.ROTTEN_KEY;

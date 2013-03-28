@@ -3,24 +3,24 @@ each movie in Movies
 	div(class='container-fluid')
 		div(class='row-fluid')
 			div(class='span12')
-				h3(class='text-center') #{movie.title}
-		div(class='row-fluid well')
-			div(class='span4')
+				h2(class='text-center') #{movie.title}
+		div(class='row-fluid well wide')
+			div(class='span3')
 				img(src=movie.poster)
-			div(class='span8 movie')
-				h4(class='not-bold') 
+			div(class='span9 movie')
+				h3(class='not-bold') 
 					strong Critics Rating: 
-					span(class='label critics #{movie.title}') #{movie.critics}
+					span(class='btn disabled critics #{movie.title}') #{movie.critics}
 					div(class='inline-block') 
 						strong Audience Rating: 
-						span(class='label viewers #{movie.title}') #{movie.viewers}
-				h4(class='not-bold') 
+						span(class='btn disabled viewers #{movie.title}') #{movie.viewers}
+				h3(class='not-bold') 
 					strong MPAA Rating: 
 					|#{movie.MPAA}
 					div(class='inline-block')
 						strong Runtime: 
 						|#{movie.runtime} minutes
-				div(class='not-bold') 
+				h4(class='not-bold') 
 					strong Synopsis: 
 					|#{movie.synopsis}
 				div
@@ -29,27 +29,22 @@ each movie in Movies
 						|#{tag.tag} 
 						strong Hits: 
 						|#{tag.hits}
-
 	script
 		var score = '#{movie.viewers}';
-		var current = $("span[class='label viewers #{movie.title}']");
-		console.log(current);
-		console.log(score);
+		var current = $("span[class='btn disabled viewers #{movie.title}']");
 		if (score > 70) {
-			current.addClass('label-success');
+			current.addClass('btn-success');
 		} else if (score > 50) {
-			current.addClass('label-warning');
+			current.addClass('btn-warning');
 		} else {
-			current.addClass('label-important');
+			current.addClass('btn-danger');
 		}
 		score = '#{movie.critics}';
-		current = $("span[class='label critics #{movie.title}']");
-		console.log(current);
-		console.log(score);
+		current = $("span[class='btn disabled critics #{movie.title}']");
 		if (score > 70) {
-			current.addClass('label-success');
+			current.addClass('btn-success');
 		} else if (score > 50) {
-			current.addClass('label-warning');
+			current.addClass('btn-warning');
 		} else {
-			current.addClass('label-important');
+			current.addClass('btn-danger');
 		}

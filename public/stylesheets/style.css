@@ -19,3 +19,12 @@ a {
 .movie {
 	min-height: 270px;
 }
+
+.wide {
+	min-width: 800px;
+}
+
+.btn {
+	border-radius: 10px;
+	font-size: 16px;
+}

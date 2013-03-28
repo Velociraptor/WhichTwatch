@@ -132,17 +132,15 @@ function saveToDB (obj) {
 		if (err)
 			return console.log ('error', err);
 		var movies = obj.movies
-		console.log(movies);
 		movies.forEach(function(movie){
 			var dbMovie = new Movie({
 				title: movie.title,
 				runtime: movie.runtime,
 				MPAA: movie.mpaa_rating,
-				poster: movie.posters.detailed,
+				poster: movie.posters.original,
 				synopsis: movie.synopsis,
 				critics: movie.ratings.critics_score,
-				viewers: movie.ratings.audience_score,
-				tags: [{tag: 'Any', hits: 1}]
+				viewers: movie.ratings.audience_score
 			});
 			dbMovie.save(function(err){
 				if (err){

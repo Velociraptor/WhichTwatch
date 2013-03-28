@@ -174,7 +174,6 @@ function textParse (inputTweet, inputMovie) {
 			};
 		});
 		console.log(movie.keywords);
-	})
-	//Movie.update({'name': inputMovie}, {'tags':new_tags}).exec(function(err, movie1){
 	});
-}
+	//Movie.update({'name': inputMovie}, {'tags':new_tags}).exec(function(err, movie1){
+	};

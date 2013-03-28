@@ -19,11 +19,15 @@ var theatersUrl = "/lists/movies/in_theaters.json?apikey=" + apikey;
 
 exports.index = function(req, res){
 	movieSearch();
-	res.render('index', { title: 'Express' });
+	Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
+	    if (err)
+	    	return console.log ('error', err);
+	    res.render('index', { title: 'Which t\'Watch', Movies: data});
+	});
 };
 
 exports.update = function(req, res){
-  Movie.find().sort({'_id' : 'descending'}).exec(function(err,data){
+  Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
     if (err)
       return console.log ('error', err);
     res.render('_movies', {Movies: data});
@@ -124,25 +128,27 @@ function movieSearch () {
 }
 
 function saveToDB (obj) {
-	var movies = obj.movies
-	console.log(movies);
-	movies.forEach(function(movie){
-		var dbMovie = new Movie({
-			title: movie.title,
-			runtime: movie.runtime,
-			MPAA: movie.mpaa_rating,
-			poster: movie.posters.detailed,
-			synopsis: movie.synopsis,
-			critics: movie.ratings.critics_score,
-			viewers: movie.ratings.audience_score,
-			tags: [{tag: 'Any', hits: 1}]
-		});
-		dbMovie.save(function(err){
-			if (err){
-				res.send(err);
-				return console.log('error', err);
-			}
-			res.send(err);
+	Movie.remove().exec(function(err,data){
+		if (err)
+			return console.log ('error', err);
+		var movies = obj.movies
+		console.log(movies);
+		movies.forEach(function(movie){
+			var dbMovie = new Movie({
+				title: movie.title,
+				runtime: movie.runtime,
+				MPAA: movie.mpaa_rating,
+				poster: movie.posters.detailed,
+				synopsis: movie.synopsis,
+				critics: movie.ratings.critics_score,
+				viewers: movie.ratings.audience_score,
+				tags: [{tag: 'Any', hits: 1}]
+			});
+			dbMovie.save(function(err){
+				if (err){
+					return console.log('error', err);
+				}
+			});
 		});
 	});
 }

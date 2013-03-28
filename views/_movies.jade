@@ -1,4 +1,55 @@
 h1(class='text-center') Movies for You:
-div(class='container')
-	each movie in Movies
-		//- Do things with the movies
+each movie in Movies
+	div(class='container-fluid')
+		div(class='row-fluid')
+			div(class='span12')
+				h3(class='text-center') #{movie.title}
+		div(class='row-fluid well')
+			div(class='span4')
+				img(src=movie.poster)
+			div(class='span8 movie')
+				h4(class='not-bold') 
+					strong Critics Rating: 
+					span(class='label critics #{movie.title}') #{movie.critics}
+					div(class='inline-block') 
+						strong Audience Rating: 
+						span(class='label viewers #{movie.title}') #{movie.viewers}
+				h4(class='not-bold') 
+					strong MPAA Rating: 
+					|#{movie.MPAA}
+					div(class='inline-block')
+						strong Runtime: 
+						|#{movie.runtime} minutes
+				div(class='not-bold') 
+					strong Synopsis: 
+					|#{movie.synopsis}
+				div
+					each tag in movie.tags
+						strong Tag: 
+						|#{tag.tag} 
+						strong Hits: 
+						|#{tag.hits}
+
+	script
+		var score = '#{movie.viewers}';
+		var current = $("span[class='label viewers #{movie.title}']");
+		console.log(current);
+		console.log(score);
+		if (score > 70) {
+			current.addClass('label-success');
+		} else if (score > 50) {
+			current.addClass('label-warning');
+		} else {
+			current.addClass('label-important');
+		}
+		score = '#{movie.critics}';
+		current = $("span[class='label critics #{movie.title}']");
+		console.log(current);
+		console.log(score);
+		if (score > 70) {
+			current.addClass('label-success');
+		} else if (score > 50) {
+			current.addClass('label-warning');
+		} else {
+			current.addClass('label-important');
+		}

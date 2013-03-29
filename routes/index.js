@@ -4,6 +4,8 @@ var http = require('http'),
 	mongoose = require('mongoose'),
 	Movie = models.Movie;
 
+var tags = ["guns", "cars", "action", "horror", "alien", "boring", "music", "awesome", "dinosaur", "better drunk", "hot", "drama", "comedy", "family", "not as good as the book","scifi", "romance"];
+
 // Rotten Tomatoes Setup Stuff
 var apikey = process.env.ROTTEN_KEY;
 var baseUrl = "api.rottentomatoes.com"

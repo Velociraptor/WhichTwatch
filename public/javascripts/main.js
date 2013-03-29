@@ -20,8 +20,8 @@ $(document).ready(function(){
 	});
 });
 
-function updateMovies(){
-  $.get('/update', function(data){
+function updateMovies(tags){
+  $.post('/update', {tags: tags}, function(data){
     $('#movies').html(data);
   });
 }

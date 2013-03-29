@@ -8,7 +8,8 @@ var MovieSchema = mongoose.Schema({
 	synopsis: String,
 	critics: Number,
 	viewers: Number,
-	tags: [{tag: String, hits: Number}]
+	tags: [{tag: String, hits: Number}],
+	totalHits: Number
 });
 
 var Movie = mongoose.model('Movie', MovieSchema);

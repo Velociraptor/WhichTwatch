@@ -100,7 +100,9 @@ jQuery.fn.tagCloud = function(cl, givenOptions) { //return this.each( function()
          //console.log(tag);
          selected_tags.push(tag);
          console.log('selected tags: ', selected_tags);
-         $.post('/update', {'tags':selected_tags});
+         $.post('/update', {'tags':selected_tags}, function(data) {
+            $('#movies').html(data);
+         });
       },
       maxFontSizeEm: 4
    }

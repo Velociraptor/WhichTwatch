@@ -40,6 +40,7 @@ exports.index = function(req, res){
 
 exports.update = function(req, res){
 	var tags = req.body.tags;
+	console.log(tags);
 	Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
 		if (err)
 			return console.log ('error', err);
@@ -203,7 +204,7 @@ function textParse (inputTweet, inputMovie) {
 			}
 		}
 	});
-	console.log('new keywords: ', new_keywords);
+	//console.log('new keywords: ', new_keywords);
 	
 	//add new keywords to tags of movie, or increment hit counter if not new word
 	var movie = Movie.findOne({'title': inputMovie}).exec(function(err, movie) {

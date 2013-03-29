@@ -37,12 +37,37 @@ exports.index = function(req, res){
 };
 
 exports.update = function(req, res){
-  Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
-    if (err)
-      return console.log ('error', err);
-    res.render('_movies', {Movies: data});
+	var tags = req.body.tags;
+	Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
+		if (err)
+			return console.log ('error', err);
+		var Movies = sortByTags(data, tags);
+    	res.render('_movies', {Movies: data});
   });
 };
+
+function sortByTags (movies, searchTags) {
+	for(var i=0; i<movies.length; i++){
+		movies[i].totalHits = 0;
+		for(var j=0; j<movies[i].tags.length; j++){
+			for(var k=0; k<searchTags.length; k++){
+				if (movies[i].tags[j].tag == searchTags[k]){
+					movies[i].totalHits += movies[i].tags[j].hits;
+				}
+			});
+		});
+		movies[i].save(function(err){
+			if (err){
+				return console.log("error", err);
+			}
+		});
+	});
+	Movie.find().sort({'totalHits':'descending'}).exec(function(err,data){
+		if (err)
+			return console.log ('error', err);
+		return data;
+	});
+}
 
 exports.movies = function(req,res){ 
 	//console.log('zip: '+ req.body['zip']);

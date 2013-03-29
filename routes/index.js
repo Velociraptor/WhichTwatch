@@ -4,6 +4,8 @@ var http = require('http'),
 	mongoose = require('mongoose'),
 	Movie = models.Movie;
 
+var tags = ["guns", "cars", "action", "horror", "alien", "boring", "music", "awesome", "dinosaur", "better drunk", "hot", "drama", "comedy", "family", "not as good as the book","scifi", "romance", "awful", "ridiculous", "inspiration"];
+
 // Rotten Tomatoes Setup Stuff
 var apikey = process.env.ROTTEN_KEY;
 var baseUrl = "api.rottentomatoes.com"
@@ -16,23 +18,23 @@ var theatersUrl = "/lists/movies/in_theaters.json?apikey=" + apikey;
 // Also, I've been looking at how to do server side ajax posts for db queries serverside but 
 // I don't know if we can do that either.
 
-
 exports.index = function(req, res){
 	movieSearch();
 	var taglist = [];
-    //searchTwitter(req);
-	Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
-		data.forEach(function(movie) {
-			// console.log('movie', movie);
-			// console.log('movie tags', movie.tags);
+  Movie.find().sort({'title': 'ascending'}).exec(function(err,results){
+    results.forEach(function(movie) {
+      req.api('search/tweets').get({
+        q: movie.title,
+        count: 100
+      }, function (err, search) {
+        for (var j = 0; j < search.statuses.length; j++) {
+          textParse(search.statuses[j].text, movie.title);
+        }
+      })
+    });
 			// taglist.push(movie.tags);
-			// console.log(taglist);
-		});
-	    if (err)
-	    	return console.log ('error', err);
-	    //console.log('final taglist: ', taglist);
-	    //taglist = '{tag: "one", count: 1}; {tag: "two" , count :2}; {tag: "three" , count :3}; {tag: "four" , count :4}; {tag: "five" , count :5}; {tag: "six" , count :6}';
-	    res.render('index', { title: 'Which t\'Watch', Movies: data, tags: taglist});
+			// // console.log(taglist);
+    res.render('index', { title: 'Which t\'Watch', Movies: results, tags: taglist});
 	});
 };
 
@@ -184,7 +186,6 @@ function saveToDB (obj) {
 function textParse (inputTweet, inputMovie) {
 	var common_string = 'a,able,about,across,after,all,almost,also,am,among,an,and,any,are,as,at,be,because,been,but,by,can,cannot,could,dear,did,do,does,either,else,ever,every,for,from,get,got,had,has,have,he,her,hers,him,his,how,however,i,if,in,into,is,it,its,just,least,let,like,likely,may,me,might,most,must,my,neither,no,nor,not,of,off,often,on,only,or,other,our,own,rather,said,say,says,she,should,since,so,some,than,that,the,their,them,then,there,these,they,this,tis,to,too,twas,us,wants,was,we,were,what,when,where,which,while,who,whom,why,will,with,would,yet,you,your';
 	var common_punc = '.,?!&()';
-
 	//get words not in common list from inputTweet
 	var new_list = inputTweet.split(' ');
 	var new_keywords = [];
@@ -211,18 +212,3 @@ function textParse (inputTweet, inputMovie) {
 	});
 	//Movie.update({'name': inputMovie}, {'tags':new_tags}).exec(function(err, movie1){
 	};
-
-function searchTwitter (req) {
-	// Do some stuff with twitter and db and rottentomatoes
-  Movie.find({}).exec(function(req,err,results){
-      req.api('search/tweets').get({
-        q: results[0].title,
-        count: 100
-      }, function (err, search) {
-        for (var i = 0; i < search.statuses.length; i++) {
-          console.log(search.statuses[i].text);
-        }
-      })
-  })
-
-}

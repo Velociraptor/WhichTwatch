@@ -82,7 +82,7 @@ function loginRequired (req, res, next) {
   }
 }
 
-app.get('/', routes.index);
+app.get('/', loginRequired, routes.index);
 
 
 app.post('/status', loginRequired, function (req, res) {

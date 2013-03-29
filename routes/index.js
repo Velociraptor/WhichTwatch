@@ -4,7 +4,7 @@ var http = require('http'),
 	mongoose = require('mongoose'),
 	Movie = models.Movie;
 
-var all_tags = ["guns", "cars", "action", "horror", "alien", "boring", "music", "awesome", "dinosaur", "better drunk", "hot", "drama", "comedy", "family", "not as good as the book","scifi", "romance", "awful", "ridiculous", "inspiration", "funny", "great", "story", "think", "kids"];
+var all_tags = ["guns", "cars", "action", "horror", "alien", "boring", "music", "awesome", "dinosaur", "better drunk", "hot", "drama", "comedy", "family", "not as good as the book","scifi", "romance", "awful", "ridiculous", "inspiration", "funny", "story", "think", "kids"];
 
 // Rotten Tomatoes Setup Stuff
 var apikey = process.env.ROTTEN_KEY;
@@ -184,8 +184,8 @@ function saveToDB (obj) {
 }
 
 function textParse (inputTweet, inputMovie) {
-	console.log('tweet: ', inputTweet);
-	console.log('title: ', inputMovie);
+	//console.log('tweet: ', inputTweet);
+	//console.log('title: ', inputMovie);
 	var common_string = 'a,able,about,across,after,all,almost,also,am,among,an,and,any,are,as,at,be,because,been,but,by,can,cannot,could,dear,did,do,does,either,else,ever,every,for,from,get,got,had,has,have,he,her,hers,him,his,how,however,i,if,in,into,is,it,its,just,least,let,like,likely,may,me,might,most,must,my,neither,no,nor,not,of,off,often,on,only,or,other,our,own,rather,said,say,says,she,should,since,so,some,than,that,the,their,them,then,there,these,they,this,tis,to,too,twas,us,wants,was,we,were,what,when,where,which,while,who,whom,why,will,with,would,yet,you,your';
 	var common_punc = '.,?!&()';
 	//get words not in common list from inputTweet
@@ -213,10 +213,11 @@ function textParse (inputTweet, inputMovie) {
 			// } else {
 			// 	movie.keywords.push({keyword:1});
 			// };
-			console.log('movie', movie);
-			console.log('movie tags', movie.tags);
+			
+			//console.log('movie', movie);
+			//console.log('movie tags', movie.tags);
 			movie.tags.push({'tag':keyword,'hits':1});
-			console.log('new movie tags: ', movie.tags);
+			//console.log('new movie tags: ', movie.tags);
 
 		movie.save(function(err){
 			if (err){

@@ -83,7 +83,7 @@ $(function() {
    // tags = '[' + tags + ']';
    // tags = jQuery.parseJSON(tags);
    // console.log('here are tags: ', tags);
-   var tags = [{tag: "guns", count: 50}, {tag: "cars", count: 30}, {tag: "action", count: 100}, {tag: "horror", count: 40}, {tag: "alien", count: 60}, {tag: "boring", count: 20}, {tag: "music", count: 80}, {tag: "awesome", count: 40}, {tag: "dinosaur", count: 45}, {tag: "better drunk", count: 60}, {tag: "hot", count: 60}, {tag: "drama", count: 60}, {tag: "comedy", count: 70}, {tag: "family", count: 80}, {tag: "not as good as the book", count: 30}, {tag: "scifi", count: 60}, {tag: "romance", count: 50}, {tag: "awful", count: 40}, {tag: "ridiculous", count: 60}, {tag: "inspiration", count: 50}];
+   var tags = [{tag: "guns", count: 50}, {tag: "cars", count: 30}, {tag: "action", count: 100}, {tag: "horror", count: 40}, {tag: "alien", count: 60}, {tag: "boring", count: 20}, {tag: "music", count: 80}, {tag: "awesome", count: 40}, {tag: "dinosaur", count: 45}, {tag: "better drunk", count: 60}, {tag: "hot", count: 60}, {tag: "drama", count: 60}, {tag: "comedy", count: 70}, {tag: "family", count: 80}, {tag: "not as good as the book", count: 30}, {tag: "scifi", count: 60}, {tag: "romance", count: 50}, {tag: "awful", count: 40}, {tag: "ridiculous", count: 60}, {tag: "inspiration", count: 50}, {tag: "funny", count: 100}, {tag: "story", count: 50}, {tag: "think", count: 30}, {tag: "kids", count: 60}];
    $("#tagcloud").tagCloud(tags);
 });
    
@@ -100,7 +100,7 @@ jQuery.fn.tagCloud = function(cl, givenOptions) { //return this.each( function()
          //console.log(tag);
          selected_tags.push(tag);
          console.log('selected tags: ', selected_tags);
-         $.post('/update', selected_tags);
+         $.post('/update', {'tags':selected_tags});
       },
       maxFontSizeEm: 4
    }

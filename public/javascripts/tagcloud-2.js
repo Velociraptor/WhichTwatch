@@ -86,6 +86,8 @@ $(function() {
    var tags = [{tag: "guns", count: 50}, {tag: "cars", count: 30}, {tag: "action", count: 100}, {tag: "horror", count: 40}, {tag: "alien", count: 60}, {tag: "boring", count: 20}, {tag: "music", count: 80}, {tag: "awesome", count: 40}, {tag: "dinosaur", count: 100}, {tag: "better drunk", count: 80}, {tag: "hot", count: 60}, {tag: "drama", count: 60}, {tag: "comedy", count: 70}, {tag: "family", count: 80}, {tag: "not as good as the book", count: 30}, {tag: "scifi", count: 60}, {tag: "romance", count: 50}];
    $("#tagcloud").tagCloud(tags);
 });
+   
+   var selected_tags = [];
 
 jQuery.fn.tagCloud = function(cl, givenOptions) { //return this.each( function() { //like a real jQuery plugin: run on on each element
    if (!cl || !cl.length)
@@ -95,7 +97,10 @@ jQuery.fn.tagCloud = function(cl, givenOptions) { //return this.each( function()
    var defaults = {
       sort: function (a, b) {return a.tag < b.tag ? -1 : (a.tag == b.tag ? 0 : 1)},//default sorting: abc
       click: function(tag) {
-         console.log(tag);
+         //console.log(tag);
+         selected_tags.push(tag);
+         console.log('selected tags: ', selected_tags);
+         //$.post('/update', selected_tags);
       },
       maxFontSizeEm: 4
    }

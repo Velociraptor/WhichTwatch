@@ -23,10 +23,10 @@ exports.index = function(req, res){
     //searchTwitter(req);
 	Movie.find().sort({'title' : 'ascending'}).exec(function(err,data){
 		data.forEach(function(movie) {
-			console.log('movie', movie);
-			console.log('movie tags', movie.tags);
-			taglist.push(movie.tags);
-			console.log(taglist);
+			// console.log('movie', movie);
+			// console.log('movie tags', movie.tags);
+			// taglist.push(movie.tags);
+			// console.log(taglist);
 		});
 	    if (err)
 	    	return console.log ('error', err);

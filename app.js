@@ -101,6 +101,6 @@ app.listen(app.get('port'), function () {
   console.log('Listening on http://' + app.get('host'))
 });
 
-app.get('/update', routes.update);
+app.post('/update', routes.update);
 
 app.post('/listMovies', routes.movies);

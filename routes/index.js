@@ -30,7 +30,7 @@ exports.index = function(req, res){
 		});
 	    if (err)
 	    	return console.log ('error', err);
-	    console.log('final taglist: ', taglist);
+	    //console.log('final taglist: ', taglist);
 	    //taglist = '{tag: "one", count: 1}; {tag: "two" , count :2}; {tag: "three" , count :3}; {tag: "four" , count :4}; {tag: "five" , count :5}; {tag: "six" , count :6}';
 	    res.render('index', { title: 'Which t\'Watch', Movies: data, tags: taglist});
 	});
@@ -54,14 +54,14 @@ function sortByTags (movies, searchTags) {
 				if (movies[i].tags[j].tag == searchTags[k]){
 					movies[i].totalHits += movies[i].tags[j].hits;
 				}
-			});
-		});
+			}
+		}
 		movies[i].save(function(err){
 			if (err){
 				return console.log("error", err);
 			}
 		});
-	});
+	};
 	Movie.find().sort({'totalHits':'descending'}).exec(function(err,data){
 		if (err)
 			return console.log ('error', err);

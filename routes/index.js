@@ -61,7 +61,7 @@ function sortByTags (movies, searchTags) {
 				return console.log("error", err);
 			}
 		});
-	};
+	}
 	Movie.find().sort({'totalHits':'descending'}).exec(function(err,data){
 		if (err)
 			return console.log ('error', err);
@@ -69,65 +69,65 @@ function sortByTags (movies, searchTags) {
 	});
 }
 
-exports.movies = function(req,res){ 
-	//console.log('zip: '+ req.body['zip']);
-	var zipcode = req.body['zip'];
-	var start = 0;
-	var title_list = new Array();
+// exports.movies = function(req,res){ 
+// 	//console.log('zip: '+ req.body['zip']);
+// 	var zipcode = req.body['zip'];
+// 	var start = 0;
+// 	var title_list = new Array();
 
-	while (start < 30) {
+// 	while (start < 30) {
 
-		var requestUrl ='/ig/api?movies='+zipcode+'&start='+start;
-		//console.log(requestUrl);
+// 		var requestUrl ='/ig/api?movies='+zipcode+'&start='+start;
+// 		//console.log(requestUrl);
 
-		var options = {
-			hostname: 'www.google.com',
-			port: 80,
-			path: requestUrl,
-			method: 'GET'
-		};
+// 		var options = {
+// 			hostname: 'www.google.com',
+// 			port: 80,
+// 			path: requestUrl,
+// 			method: 'GET'
+// 		};
 
-		var request = http.request(options, function(result) {
-		  //console.log('STATUS: ' + res.statusCode);
-		  //console.log('HEADERS: ' + JSON.stringify(res.headers));
-		  result.setEncoding('utf8');
-		  result.on('data', function (chunk) {
-		  	//console.log('BODY: ' + chunk);
-		  	var more_titles = true;
-		  	title_start = 0;
-		  	while (more_titles == true) {
-		  		title_index = chunk.indexOf('title data', title_start) + 12;
-			  	if (title_index != 11) {
-			  		title_end = chunk.indexOf('/>', title_index) - 1;
-			  		new_title = chunk.slice(title_index, title_end);
-			  		//console.log(new_title);
-			  		title_list.push(new_title);
-			  		console.log(title_list);
-			  		title_start = title_end;
-			  	} else {
-			  		more_titles = false;
-			  	};
-		  };
-	    });
-		});
+// 		var request = http.request(options, function(result) {
+// 		  //console.log('STATUS: ' + res.statusCode);
+// 		  //console.log('HEADERS: ' + JSON.stringify(res.headers));
+// 		  result.setEncoding('utf8');
+// 		  result.on('data', function (chunk) {
+// 		  	//console.log('BODY: ' + chunk);
+// 		  	var more_titles = true;
+// 		  	title_start = 0;
+// 		  	while (more_titles == true) {
+// 		  		title_index = chunk.indexOf('title data', title_start) + 12;
+// 			  	if (title_index != 11) {
+// 			  		title_end = chunk.indexOf('/>', title_index) - 1;
+// 			  		new_title = chunk.slice(title_index, title_end);
+// 			  		//console.log(new_title);
+// 			  		title_list.push(new_title);
+// 			  		console.log(title_list);
+// 			  		title_start = title_end;
+// 			  	} else {
+// 			  		more_titles = false;
+// 			  	};
+// 		  };
+// 	    });
+// 		});
 
-		request.on('error', function(e) {
-		  console.log('problem with request: ' + e.message);
-		});
+// 		request.on('error', function(e) {
+// 		  console.log('problem with request: ' + e.message);
+// 		});
 
-		// write data to request body
-		//request.write('data\n');
-		//request.write('data\n');
-		console.log(title_list);
-		request.end();
+// 		// write data to request body
+// 		//request.write('data\n');
+// 		//request.write('data\n');
+// 		console.log(title_list);
+// 		request.end();
 
-		start = start + 3;
+// 		start = start + 3;
 		
-	};
+// 	};
 
-	console.log('bananas!');
-	console.log(title_list);
-};
+// 	console.log('bananas!');
+// 	console.log(title_list);
+// };
 
 function movieSearch () {
 	var output = '';
@@ -169,8 +169,8 @@ function saveToDB (obj) {
 				poster: movie.posters.original,
 				synopsis: movie.synopsis,
 				critics: movie.ratings.critics_score,
-				viewers: movie.ratings.audience_score,
-				tags:[{tag: 'any', hits: 1}]
+				viewers: movie.ratings.audience_score
+				// tags:[{tag: 'any', hits: 1}]
 			});
 			dbMovie.save(function(err){
 				if (err){

@@ -103,4 +103,4 @@ app.listen(app.get('port'), function () {
 
 app.post('/update', routes.update);
 
-app.post('/listMovies', routes.movies);
+// app.post('/listMovies', routes.movies);

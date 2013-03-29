@@ -28,12 +28,10 @@ exports.index = function(req, res){
       	var text = "";
         for (var j = 0; j < search.statuses.length; j++) {
         	//add status to string
-        	textParse(search.statuses[j].text, movie.title);
-        	if (j==search.statuses.length-1) {
-        		res.render('index', { title: 'Which t\'Watch', Movies: results, tags: taglist});
-        	}
+        	text += search.statuses[j].text;
         };
-        
+        textParse(text, movie.title);
+        res.render('index', { title: 'Which t\'Watch', Movies: results, tags: taglist});
       });
     });
 			// taglist.push(movie.tags);
@@ -237,11 +235,11 @@ function textParse (inputTweet, inputMovie) {
 			word = word.toLowerCase();
 			var q = all_tags.indexOf(word);
 			if (q != -1) {
-				new_keywords.push(word);
+				//new_keywords.push(word);
 				//console.log(word);
 				//console.log(q);
 				//console.log(all_hits[q]);
-				//all_hits[q] = all_hits[q]+1;
+				all_hits[q] = all_hits[q]+1;
 				//console.log(word, all_hits);
 
 			};
@@ -254,9 +252,9 @@ function textParse (inputTweet, inputMovie) {
 		//all_tags.forEach(function(keyword) {
 		//console.log(movie);
 		//console.log('all hits:', all_hits);
-		for(var k=0; k<new_keywords.length; k++){
-			var keyword1 = new_keywords[k];
-			//var hits1 = all_hits[k];
+		for(var k=0; k<all_tags.length; k++){
+			var keyword1 = all_tags[k];
+			var hits1 = all_hits[k];
 
 			// if (!(keyword in movie.keywords)) {
 			// 	movie.keywords[keyword] += 1;
@@ -266,8 +264,7 @@ function textParse (inputTweet, inputMovie) {
 			
 			//console.log('movie', movie);
 			//console.log('movie tags', movie.tags);
-			//movie.tags.push({'tag':keyword1,'hits':hits1});
-			movie.tags.push({'tag':keyword1,'hits':1});
+			movie.tags.push({'tag':keyword1,'hits':hits1});
 			//console.log(inputMovie, 'new movie tags: ', movie.tags);
 
 		};

@@ -25,10 +25,10 @@ each movie in Movies
 					|#{movie.synopsis}
 				div
 					each tag in movie.tags
-						strong Tag: 
-						|#{tag.tag} 
-						strong Hits: 
-						|#{tag.hits}
+						//- strong Tag: 
+						//- |#{tag.tag} 
+						//- strong Hits: 
+						//- |#{tag.hits}
 	script
 		var score = '#{movie.viewers}';
 		var current = $("span[class='btn disabled viewers #{movie.title}']");

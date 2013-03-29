@@ -29,9 +29,9 @@ exports.index = function(req, res){
         for (var j = 0; j < search.statuses.length; j++) {
         	//add status to string
         	textParse(search.statuses[j].text, movie.title);
-        	if (j==search.statuses.length-1) {
+        	//if (j==search.statuses.length-1) {
         		res.render('index', { title: 'Which t\'Watch', Movies: results, tags: taglist});
-        	}
+        	//}
         };
         
       });

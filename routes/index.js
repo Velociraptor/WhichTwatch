@@ -215,7 +215,7 @@ function saveToDB (obj) {
 function textParse (inputTweet, inputMovie) {
 	//console.log('tweet: ', inputTweet);
 	//console.log('title: ', inputMovie);
-	var all_tags = ["guns", "cars", "action", "horror", "alien", "boring", "music", "awesome", "dinosaur", "better drunk", "hot", "drama", "comedy", "family", "not as good as the book","scifi", "romance", "awful", "ridiculous", "inspiration", "funny", "story", "think", "kids"];
+	var all_tags = ["guns", "cars", "action", "horror", "alien", "boring", "music", "awesome", "dinosaur", "drunk", "hot", "drama", "comedy", "family", "book","scifi", "romance", "awful", "ridiculous", "inspiration", "funny", "story", "think", "kids"];
 	var all_hits = [];
 	for(var j=0; j<all_tags.length; j++){
 		all_hits.push(0);
